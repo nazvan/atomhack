@@ -15,13 +15,14 @@ from db.config import engine, Base
 app = FastAPI(
     docs_url=f"/docs",
     openapi_url="/api/openapi.json",
+    # openapi_prefix='/api/'
 )
 
 
-from routers import pipe_router
+from routers import file_router, pipe_router
 
 
-routers = [pipe_router]
+routers = [file_router, pipe_router]
 
 for router in routers:
     app.include_router(router)

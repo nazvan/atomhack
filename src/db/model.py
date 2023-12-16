@@ -9,7 +9,7 @@ import time
 from typing import List, Optional
 from sqlalchemy.orm import relationship
 
-class Pipe(Base): 
+class PipeModel(Base): 
     __tablename__ = "pipes"
 
     id = Column(Integer, primary_key=True)
@@ -19,12 +19,12 @@ class Pipe(Base):
     desc = Column(String, nullable=True)  
     isDeleted = Column(Boolean, nullable=True)  
 
-    defects = relationship("Defect", back_populates="pipe")
-    images = relationship("Image", back_populates="pipe")
+    defects = relationship("DefectModel", back_populates="pipe")
+    images = relationship("ImageModel", back_populates="pipe")
 
 
 
-class Image(Base):
+class ImageModel(Base):
     __tablename__ = "images"
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=True)  
@@ -32,14 +32,15 @@ class Image(Base):
     timestamp = Column(Integer, nullable=True) 
     path = Column(String, nullable=True)  
     desc = Column(String, nullable=True)
+    pipe_n = Column(Integer,nullable=False)
 
     pipe_id = Column(Integer, ForeignKey('pipes.id'))
-    pipe = relationship("Pipe", back_populates="images")
+    pipe = relationship("PipeModel", back_populates="images")
 
-    defects = relationship("Defect", back_populates="image")
+    defects = relationship("DefectModel", back_populates="image")
 
 
-class Defect(Base): 
+class DefectModel(Base): 
     __tablename__ = "defects"
 
     id = Column(Integer, primary_key=True)
@@ -51,10 +52,10 @@ class Defect(Base):
     type = Column(Boolean, nullable=True)
 
     pipe_id = Column(Integer, ForeignKey('pipes.id'))
-    pipe = relationship("Pipe", back_populates="defects")
+    pipe = relationship("PipeModel", back_populates="defects")
 
     image_id = Column(Integer, ForeignKey('images.id'))
-    image = relationship("Image", back_populates="defects")
+    image = relationship("ImageModel", back_populates="defects")
 
 
 
