@@ -3,6 +3,7 @@ from fastapi import FastAPI, APIRouter, WebSocket
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
+import os
 
 
 # from routers.video_router import VIDEO_PATH
@@ -37,12 +38,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount('/api/images/', StaticFiles(directory=os.path.join('/',*os.getcwd().split('/'),'files')))
+
 
 @app.on_event("startup")
 async def startup():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.create_all)
+    pass
+    # async with engine.begin() as conn:
+        # await conn.run_sync(Base.metadata.drop_all)
+        # await conn.run_sync(Base.metadata.create_all)
 
 
 if __name__ == "__main__":

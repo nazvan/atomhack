@@ -28,7 +28,7 @@ class ImageModel(Base):
     __tablename__ = "images"
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=True)  
-    filename = Column(String, nullable=True) 
+    url = Column(String, nullable=True) 
     timestamp = Column(Integer, nullable=True) 
     path = Column(String, nullable=True)  
     desc = Column(String, nullable=True)
